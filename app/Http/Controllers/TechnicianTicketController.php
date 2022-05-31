@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Ticket;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Auth;
 
 class TechnicianTicketController extends Controller
