@@ -13,16 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
-            $table->string('title');
-            $table->string('slug');
-            $table->longText('description');
-            $table->string('assigned_to');
-            $table->string('status');
-            $table->string('image')->nullable();
-            $table->date('due_on');
+            $table->foreignId('ticket_id')->constrained('tickets');
+            $table->longText('comment');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tickets');
+        Schema::dropIfExists('comments');
     }
 };

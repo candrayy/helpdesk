@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Ticket;
+use App\Models\Comment;
 use Auth;
 
 class AdminController extends Controller
@@ -15,7 +17,9 @@ class AdminController extends Controller
      */
     public function index()
     {
-        return view('admin.admin');
+        $ticket = Ticket::count();
+        $comment = Comment::count();
+        return view('admin.admin', compact('ticket', 'comment'));
     }
 
 }

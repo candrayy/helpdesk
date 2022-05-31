@@ -9,26 +9,23 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Auth;
 
-class TechnicianTicketController extends Controller
+class TicketsAdminController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index(Request $request)
     {
-        $dataUsers = DB::table('roles')
-            ->join('users', 'roles.id', '=', 'users.role_id')
-            ->select('users.*')
-            ->where('roles.id', 3)
-            ->where('users.status', 'active')
-            ->get();
-
         if ($request->ajax()) {
-            $data = Ticket::where('assigned_to', Auth::user()->id)->latest()->get();
+            $data = Ticket::latest()->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
    
                            $btn = '<div class="text-center">
-                                        <a href="detailss/'.$row->slug.'" class="btn btn-success btn-xs">Details</a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning text-white editTicket"><i class="bi bi-pencil-fill">Edit</i></a>
+                                        <a href="detail/'.$row->slug.'" class="btn btn-success btn-xs">Details</a>
                                    </div>';
     
                         return $btn;
@@ -37,9 +34,25 @@ class TechnicianTicketController extends Controller
                     ->make(true);
         }
 
-        return view('technician.ticket', compact('dataUsers'));
+        return view('admin.tickets');
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         Ticket::updateOrCreate(['id' => $request->id],
@@ -48,33 +61,55 @@ class TechnicianTicketController extends Controller
    
         return response()->json(['success'=>'User data saved successfully.']);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $ticket = Ticket::find($id);
-        return response()->json($ticket);
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        Ticket::find($id)->delete();
-        return response()->json(['success'=>'User data deleted successfully.']);
+        //
     }
 
-    public function detailss($slug)
+    public function detail($slug)
     {
         $ticket = Ticket::where('slug', $slug)->first();
-        return view('technician.detail', compact('ticket'));
+        return view('admin.details', compact('ticket'));
     }
 }

@@ -12,6 +12,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>No</th>
+                                        <th>User</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Assigned To</th>
@@ -102,6 +103,7 @@
         ajax: "{{ route('ticket.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'user_id', name: 'user_id'},
             {data: 'title', name: 'title'},
             {data: 'description', name: 'description'},
             {data: 'assigned_to', name: 'assigned_to'},

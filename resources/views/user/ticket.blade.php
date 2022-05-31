@@ -7,8 +7,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="row">
-                        <div class="col-md-12 text-right">
-                            <a class="btn btn-dark" href="javascript:void(0)" id="createNewUser"><i class="bi bi-plus-circle-fill"></i> add ticket</a>
+                        <div class="col-md-12 text-right mt-2">
+                            <a class="btn btn-dark" href="javascript:void(0)" id="createNewUser"><i class="bi bi-plus-circle-fill"></i> Add Ticket</a>
                         </div>
                         <div class="col-md-12 mt-2 mb-5">
                             <table class="table table-hover data-table" style="width: 100%">
@@ -46,19 +46,25 @@
                                       <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}" required>
                                   </div>
                               </div>
-                              <div class="form-group">
+                              <!-- <div class="form-group mb-3">
+                                  <label for="name" class="col-sm-2 control-label">Image</label>
+                                  <div class="col-sm-12">
+                                      <input type="file" class="form-control" id="image" name="image" required>
+                                  </div>
+                              </div> -->
+                              <div class="form-group mb-3">
                                   <label for="name" class="col-sm-2 control-label">Title</label>
                                   <div class="col-sm-12">
                                       <input type="text" class="form-control" id="title" name="title" required>
                                   </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group mb-3">
                                   <label for="name" class="col-sm-2 control-label">Description</label>
                                   <div class="col-sm-12">
                                   <textarea type="text" id="description" name="description" class="form-control desc" required></textarea>
                                   </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group mb-3">
                                   <label for="name" class="col-sm-2 control-label">Assigned To</label>
                                   <div class="col-sm-12">
                                     <select name="assigned_to" id="assigned_to" class="form-select form-select-sm" aria-label=".form-select-sm example">
@@ -68,13 +74,13 @@
                                     </select>
                                   </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group mb-3">
                                   <div class="col-sm-12">
                                       <label for="status" class="col-sm-2 control_label">Status</label>
                                       <input type="text" class="form-control" id="status" name="status" value="Open" readonly>
                                   </div>
                               </div>
-                              <div class="form-group">
+                              <div class="form-group mb-3">
                                   <label for="name" class="col-sm-2 control-label">Due On</label>
                                   <div class="col-sm-12">
                                       <input type="date" class="form-control" id="due_on" name="due_on" required>
@@ -118,7 +124,7 @@
         $('#saveBtn').val("create-disease");
         $('#id').val('');
         $('#roleDataForm').trigger("reset");
-        $('#modelHeading').html("Create New Disease");
+        $('#modelHeading').html("Create New Ticket");
         $('#ajaxModel').modal('show');
     });
     
@@ -131,6 +137,7 @@
             $('#id').val(data.id);
             $('#user_id').val(data.user_id);
             $('#title').val(data.title);
+            $('#slug').val(data.slug);
             $('#description').val(data.description);
             $('#assigned_to').val(data.assigned_to);
             $('#status').val(data.status);
@@ -181,8 +188,8 @@
 </script>
 
 <script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
-    <script>
-        //CKEDITOR.replaceClass = 'desc';
-    </script>
+<script>
+    //CKEDITOR.replaceClass = 'desc';
+</script>
 
 @endsection
