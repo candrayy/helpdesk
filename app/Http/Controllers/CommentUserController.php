@@ -51,10 +51,6 @@ class CommentUserController extends Controller
                 ]);
                 return redirect()->back();
             }
-            else
-            {
-                return redirect()->back();
-            }
         }
     }
 
@@ -100,6 +96,7 @@ class CommentUserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Comment::find($id)->delete();
+        return redirect()->back();
     }
 }

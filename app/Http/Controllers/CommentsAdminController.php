@@ -39,7 +39,7 @@ class CommentsAdminController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check())
+        /*if (Auth::check())
         {
             $ticket = Ticket::where('slug', $request->ticket_slug)->first();
             if($ticket)
@@ -55,7 +55,7 @@ class CommentsAdminController extends Controller
             {
                 return redirect()->back();
             }
-        }
+        }*/
     }
 
     /**

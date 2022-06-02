@@ -8,6 +8,7 @@
     <h3 class="mt-3">{{ $ticket->title }}</h3>
     <p class="fs-5">{{ $ticket->user->name }}</p>
     <hr>
+    <p class="fw-semibold fs-5">Description Ticket</p>
     <p>{{ $ticket->description }}</p>
 </div>
 
@@ -40,7 +41,13 @@
                 <div class="comment-body">
                     <p>{!! $item->comment !!}</p>
                 </div>
-            <hr/>
+                @if(Auth::check() && $item->user_id == Auth::user()->id)
+                <div>
+                <a href="{{ route('delete-comments', $item->id) }}" type="button" class="btn btn-danger">Delete</a>
+                </div>
+                @endif
+            </div>
+            <hr>
         <!-- endforeach -->
         </div>
     @empty

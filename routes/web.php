@@ -50,6 +50,7 @@ Route::middleware(['auth', 'user', 'revalidate'])->group(function () {
     Route::resource('user/tickets', TicketUserController::class);
     Route::get('user/details/{slug}', [TicketUserController::class, 'details']);
     Route::resource('user/comments', CommentUserController::class);
+    Route::get('/delete-comments/{id}', [CommentUserController::class, 'destroy'])->name('delete-comments');
 });
 
 Route::middleware(['auth', 'technician', 'revalidate'])->group(function () {
@@ -58,5 +59,6 @@ Route::middleware(['auth', 'technician', 'revalidate'])->group(function () {
     Route::resource('technician/ticket', TechnicianTicketController::class);
     Route::get('technician/detailss/{slug}', [TechnicianTicketController::class, 'detailss']);
     Route::resource('technician/commentss', CommentssTechnicianController::class);
+    Route::get('/delete-commentss/{id}', [CommentssTechnicianController::class, 'destroy'])->name('delete-commentss');
 });
 

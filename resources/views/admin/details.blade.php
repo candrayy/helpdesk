@@ -8,6 +8,7 @@
     <h3 class="mt-3">{{ $ticket->title }}</h3>
     <p class="fs-5">{{ $ticket->user->name }}</p>
     <hr>
+    <p class="fw-semibold fs-5">Description Ticket</p>
     <p>{{ $ticket->description }}</p>
 </div>
 
@@ -15,14 +16,9 @@
 <div class="container">
 <div class="card mt-3 mb-3">
   <h5 class="card-header">Comment</h5>
-  <form action="{{ url('admin/comments') }}" method="post">
-      {{ csrf_field() }}
+  
   <div class="card-body">
-      <input type="hidden" name="ticket_slug" value="{{ $ticket->slug }}">
-    <textarea name="comment" id="comment" class="form-control desc" placeholder="Input Comment Here"></textarea>
-    <button type="submit" class="btn btn-primary mt-2">Submit</button>
-  </form>
-    <hr>
+      
 
     @forelse($ticket->comment as $item)
         <div class="comments"> 
