@@ -3,18 +3,16 @@
 @section('content')
 
 <!-- Isi Kontent -->
-  <div class="section section-components pb-0" id="section-components">
-      <div class="container">
-        <div class="row justify-content-center">
-           <div class="col-lg-12">
-            <!-- Title Content -->
-            <h3 class="h4 text-primary font-weight-bold mb-4">Dashboard</h3>
-            <!-- End Title Content -->
-            Isi user
-          </div>
+<div class="d-flex justify-content-center mt-3">
+    <div class="col-sm-6">
+      <div class="card border-primary shadow-sm p-3 mb-5 bg-body">
+        <div class="card-body">
+          <h5 class="card-title mb-3">Ticket</h5>
+          <a href="#" class="btn btn-primary">{{ $ticket }}</a>
         </div>
       </div>
     </div>
-  </div>
+</div>
+<!-- End Kontent -->
 
 @endsection

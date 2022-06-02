@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Technician;
 use Auth;
-use App\User;
+use App\Models\User;
+use App\Models\Ticket;
 
 class TechnicianController extends Controller
 {
@@ -16,7 +17,8 @@ class TechnicianController extends Controller
      */
     public function index()
     {
-        return view('technician.technician');
+        $ticket = Ticket::count();
+        return view('technician.technician', compact('ticket'));
     }
 
     /**

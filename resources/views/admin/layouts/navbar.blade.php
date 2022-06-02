@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg shadow-sm p-3 mb-5 bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="{{ route('admin') }}">HELPDESK</a>
 
