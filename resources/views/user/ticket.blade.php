@@ -15,6 +15,7 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th>No</th>
+                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Assigned To</th>
@@ -39,19 +40,19 @@
                           <h4 class="modal-title" id="modelHeading"></h4>
                       </div>
                       <div class="modal-body">
-                          <form id="roleDataForm" name="roleDataForm" class="form-horizontal">
+                          <form id="roleDataForm" name="roleDataForm" class="form-horizontal" enctype="multipart/form-data">
                               <input type="hidden" name="id" id="id">
                               <div class="form-group">
                                   <div class="col-sm-12">
                                       <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}" required>
                                   </div>
                               </div>
-                              <!-- <div class="form-group mb-3">
-                                  <label for="name" class="col-sm-2 control-label">Image</label>
+                              <div class="form-group mb-3">
+                                  <label for="img_ticket" class="col-sm-2 control-label">Image</label>
                                   <div class="col-sm-12">
-                                      <input type="file" class="form-control" id="image" name="image" required>
+                                      <input type="file" class="form-control" name="picture" required>
                                   </div>
-                              </div> -->
+                              </div>
                               <div class="form-group mb-3">
                                   <label for="name" class="col-sm-2 control-label">Title</label>
                                   <div class="col-sm-12">
@@ -111,6 +112,7 @@
         ajax: "{{ route('tickets.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'picture', name: 'picture', orderable: false},
             {data: 'title', name: 'title'},
             {data: 'description', name: 'description'},
             {data: 'assigned_to', name: 'assigned_to'},

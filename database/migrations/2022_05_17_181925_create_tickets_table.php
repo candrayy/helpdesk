@@ -16,12 +16,12 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->string('picture')->nullable();
             $table->string('title');
             $table->string('slug');
             $table->longText('description');
             $table->string('assigned_to');
             $table->string('status');
-            $table->string('image')->nullable();
             $table->date('due_on');
             $table->timestamps();
         });

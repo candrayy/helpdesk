@@ -12,8 +12,14 @@ class Ticket extends Model
     protected $primaryKey = 'id';
     public $timestamps = false;
     protected $fillable = [
-        'user_id', 'title', 'description',
-        'assigned_to', 'status', 'image', 'due_on', 'slug'
+        'user_id',
+        'picture',
+        'title',
+        'description',
+        'assigned_to',
+        'status',
+        'due_on',
+        'slug'
     ];
 
     public function user()
