@@ -44,15 +44,6 @@
   
   </div>
 
-  <!-- Footer -->
-  <footer class="sticky-footer bg-white">
-    <div class="position-absolute bottom-0 start-50 translate-middle-x">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Helpdesk <script>document.write(new Date().getFullYear())</script></span>
-        </div>
-    </div>
-  </footer>
-  <!-- End of Footer -->
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   
