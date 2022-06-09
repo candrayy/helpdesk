@@ -28,8 +28,8 @@ class TechnicianTicketController extends Controller
                     ->addColumn('action', function($row){
    
                            $btn = '<div class="text-center">
-                                        <a href="detailss/'.$row->slug.'" class="btn btn-success btn-xs">Details</a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning text-white editTicket"><i class="bi bi-pencil-fill">Edit</i></a>
+                                        <a href="detailss/'.$row->slug.'" class="btn btn-warning text-white btn-xs">Details</a>
+                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-success text-white editTicket"><i class="bi bi-pencil-fill">Edit</i></a>
                                    </div>';
     
                         return $btn;
@@ -37,7 +37,10 @@ class TechnicianTicketController extends Controller
                     ->addColumn('picture', function($row){
                         return '<a href="/storage/images/' . $row->picture . '" data-lightbox="' . $row->picture . '"><img src="/storage/images/' . $row->picture . '" width="100" class="img-thumbnail"></a>';
                     })
-                    ->rawColumns(['picture', 'action'])
+                    ->addColumn('assigned_to', function($row){
+                        return User::where('id', $row->assigned_to)->select('email')->get();
+                    })
+                    ->rawColumns(['assigned_to', 'picture', 'action'])
                     ->make(true);
         }
 

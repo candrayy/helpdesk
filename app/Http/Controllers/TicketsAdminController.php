@@ -25,12 +25,18 @@ class TicketsAdminController extends Controller
                     ->addColumn('action', function($row){
    
                            $btn = '<div class="text-center">
-                                        <a href="detail/'.$row->slug.'" class="btn btn-success btn-xs">Details</a>
+                                        <a href="detail/'.$row->slug.'" class="btn btn-warning text-white btn-xs">Details</a>
                                    </div>';
     
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->addColumn('picture', function($row){
+                        return '<a href="/storage/images/' . $row->picture . '" data-lightbox="' . $row->picture . '"><img src="/storage/images/' . $row->picture . '" width="100" class="img-thumbnail"></a>';
+                    })
+                    ->addColumn('assigned_to', function($row){
+                        return User::where('id', $row->assigned_to)->select('email')->get();
+                    })
+                    ->rawColumns(['assigned_to', 'picture', 'action'])
                     ->make(true);
         }
 

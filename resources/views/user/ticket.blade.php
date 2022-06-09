@@ -144,9 +144,9 @@
         <div class="row my-5">
         <div class="col-lg-12">
             <div class="card shadow">
-            <div class="card-header bg-danger d-flex justify-content-between align-items-center">
+            <div class="card-header bg-primary d-flex justify-content-between align-items-center">
                 <h3 class="text-light">Manage Ticket</h3>
-                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addTicketModal">Add New Ticket</button>
+                <button class="btn btn-light text-primary" data-bs-toggle="modal" data-bs-target="#addTicketModal">Add New Ticket</button>
             </div>
             <div class="card-body" id="showAllTicket">
                 <h1 class="text-center text-secondary my-5">Loading...</h1>

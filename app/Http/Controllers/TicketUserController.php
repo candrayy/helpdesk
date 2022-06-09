@@ -56,9 +56,9 @@ class TicketUserController extends Controller
                     <td>' . User::where('id', $tkt->assigned_to)->select('email')->get() . '</td>
                     <td>' . $tkt->status . '</td>
                     <td>
-                        <a href="details/'. $tkt->slug. '" class="btn text-primary mx-1">Detail</a>
-                        <a href="#" id="' . $tkt->id . '" class="btn text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editTicketModal">Edit</a>
-                        <a href="#" id="' . $tkt->id . '" class="btn text-danger mx-1 deleteIcon">Delete</a>
+                        <a href="details/'. $tkt->slug. '" class="btn text-white mx-1 btn-warning">Detail</a>
+                        <a href="#" id="' . $tkt->id . '" class="btn text-white mx-1 editIcon btn-success" data-bs-toggle="modal" data-bs-target="#editTicketModal">Edit</a>
+                        <a href="#" id="' . $tkt->id . '" class="btn text-white mx-1 deleteIcon btn-danger">Delete</a>
                     </td>
                 </tr>';
             }

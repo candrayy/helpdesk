@@ -13,6 +13,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>User</th>
+                                        <th>Image</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Assigned To</th>
@@ -48,6 +49,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'user_id', name: 'user_id'},
+            {data: 'picture', name: 'picture', orderable: false},
             {data: 'title', name: 'title'},
             {data: 'description', name: 'description'},
             {data: 'assigned_to', name: 'assigned_to'},
