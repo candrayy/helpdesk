@@ -34,7 +34,10 @@ class TechnicianTicketController extends Controller
     
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->addColumn('picture', function($row){
+                        return '<a href="/storage/images/' . $row->picture . '" data-lightbox="' . $row->picture . '"><img src="/storage/images/' . $row->picture . '" width="100" class="img-thumbnail"></a>';
+                    })
+                    ->rawColumns(['picture', 'action'])
                     ->make(true);
         }
 

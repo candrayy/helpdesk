@@ -7,6 +7,7 @@
 <div class="container">
     <h3 class="mt-3">{{ $ticket->title }}</h3>
     <p class="fs-5">{{ $ticket->user->name }}</p>
+    <img src="/storage/images/{{ $ticket->picture }}" width="65%" class="">
     <hr>
     <p class="fw-semibold fs-5">Description Ticket</p>
     <p>{{ $ticket->description }}</p>

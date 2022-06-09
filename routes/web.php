@@ -47,13 +47,16 @@ Route::middleware(['auth', 'admin', 'revalidate'])->group(function () {
 Route::middleware(['auth', 'user', 'revalidate'])->group(function () {
     // User
     Route::get('/user', [UserController::class, 'index'])->name('user');
+
     // User Ticket
     Route::resource('user/tickets', TicketUserController::class);
+    Route::post('user/store', [TicketUserController::class, 'store'])->name('storeTkt');
     Route::get('user/details/{slug}', [TicketUserController::class, 'details']);
     Route::get('user/fetchall', [TicketUserController::class, 'fetchAll'])->name('fetchAll');
     Route::delete('user/delete', [TicketUserController::class, 'delete'])->name('deleteTkt');
     Route::get('user/edit', [TicketUserController::class, 'edit'])->name('editTkt');
     Route::post('user/update', [TicketUserController::class, 'update'])->name('updateTkt');
+    
     // User Comment
     Route::resource('user/comments', CommentUserController::class);
     Route::get('/delete-comments/{id}', [CommentUserController::class, 'destroy'])->name('delete-comments');

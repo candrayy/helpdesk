@@ -146,8 +146,7 @@
             <div class="card shadow">
             <div class="card-header bg-danger d-flex justify-content-between align-items-center">
                 <h3 class="text-light">Manage Ticket</h3>
-                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addTicketModal"><i
-                    class="bi-plus-circle me-2"></i>Add New Ticket</button>
+                <button class="btn btn-light" data-bs-toggle="modal" data-bs-target="#addTicketModal">Add New Ticket</button>
             </div>
             <div class="card-body" id="showAllTicket">
                 <h1 class="text-center text-secondary my-5">Loading...</h1>
@@ -168,12 +167,12 @@
     });
     
     // add new ticket ajax request
-    $("#addTicket").submit(function(e) {
+    $("#addTicketForm").submit(function(e) {
         e.preventDefault();
         const fd = new FormData(this);
         $("#addTicket").text('Adding...');
         $.ajax({
-          url: '{{ route('tickets.store') }}',
+          url: '{{ route('storeTkt') }}',
           method: 'post',
           data: fd,
           cache: false,
@@ -184,7 +183,7 @@
             if (response.status == 200) {
               Swal.fire(
                 'Added!',
-                'Student Added Successfully!',
+                'Ticket Added Successfully!',
                 'success'
               )
               fetchAllTicket();
@@ -223,7 +222,7 @@
         });
       });
 
-      // update student ajax request
+      // update ticket ajax request
       $("#editTicketForm").submit(function(e) {
         e.preventDefault();
         const fd = new FormData(this);
@@ -240,7 +239,7 @@
             if (response.status == 200) {
               Swal.fire(
                 'Updated!',
-                'Student Updated Successfully!',
+                'Ticket Updated Successfully!',
                 'success'
               )
               fetchAllTicket();
@@ -252,7 +251,7 @@
         });
       });
 
-      // delete student ajax request
+      // delete ticket ajax request
       $(document).on('click', '.deleteIcon', function(e) {
         e.preventDefault();
         let id = $(this).attr('id');
