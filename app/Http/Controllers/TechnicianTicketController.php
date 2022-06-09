@@ -23,6 +23,7 @@ class TechnicianTicketController extends Controller
 
         if ($request->ajax()) {
             $data = Ticket::where('assigned_to', Auth::user()->id)->latest()->get();
+            $usr = User::where('id', Auth::user()->id)->get();
             return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
@@ -37,8 +38,10 @@ class TechnicianTicketController extends Controller
                     ->addColumn('picture', function($row){
                         return '<a href="/storage/images/' . $row->picture . '" data-lightbox="' . $row->picture . '"><img src="/storage/images/' . $row->picture . '" width="100" class="img-thumbnail"></a>';
                     })
-                    ->addColumn('assigned_to', function($row){
-                        return User::where('id', $row->assigned_to)->select('email')->get();
+                    ->addColumn('assigned_to', function($row) use ($usr) {
+                        foreach($usr as $u){
+                            return $u->email;
+                        }
                     })
                     ->rawColumns(['assigned_to', 'picture', 'action'])
                     ->make(true);

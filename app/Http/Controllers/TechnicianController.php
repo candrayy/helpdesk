@@ -17,7 +17,7 @@ class TechnicianController extends Controller
      */
     public function index()
     {
-        $ticket = Ticket::count();
+        $ticket = Ticket::where('assigned_to', Auth::user()->id)->count();
         return view('technician.technician', compact('ticket'));
     }
 
