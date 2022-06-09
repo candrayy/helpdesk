@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Ticket;
@@ -15,7 +15,7 @@ use Auth;
 
 class TicketUserController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $dataUsers = DB::table('roles')
             ->join('users', 'roles.id', '=', 'users.role_id')
@@ -24,58 +24,72 @@ class TicketUserController extends Controller
             ->where('users.status', 'active')
             ->get();
 
-        if ($request->ajax()) {
-            $data = Ticket::where('user_id', Auth::user()->id)->latest()->get();
-            return Datatables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-   
-                           $btn = '<div class="text-center">
-                                        <a href="details/'.$row->slug.'" class="btn btn-success btn-xs">Details</a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-warning text-white editUser"><i class="bi bi-pencil-fill">Edit</i></a>
-                                        <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Delete" class="btn btn-outline-danger text-warning deleteUser"><i class="bi bi-trash2-fill">Delete</i></a>
-                                   </div>';
-    
-                        return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-        }
-
         return view('user.ticket', compact('dataUsers'));
     }
 
+    public function fetchAll()
+    {
+        $dtTicket = Ticket::where('user_id', Auth::user()->id)->latest()->get();
+        // User::where('id', $tkt->assigned_to)->select('email')->get()
+        $output = '';
+        if($dtTicket->count() > 0){
+            $output .= '<div style="overflow-x: auto"><table class="table table-striped table-sm text-center align-middle">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Assigned To</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>';
+            $no = 1;
+            foreach($dtTicket as $tkt){
+                $output .= '<tr>
+                    <td>' . $no++ . '</td>
+                    <td> <a href="/storage/images/' . $tkt->picture . '" data-lightbox="' . $tkt->picture . '"><img src="/storage/images/' . $tkt->picture . '" width="100" class="img-thumbnail"></a></td>
+                    <td>' . $tkt->title . '</td>
+                    <td>' . $tkt->description . '</td>
+                    <td>' . $tkt->assigned_to . '</td>
+                    <td>' . $tkt->status . '</td>
+                    <td>
+                        <a href="details/'. $tkt->slug. '" class="btn text-primary mx-1">Detail</a>
+                        <a href="#" id="' . $tkt->id . '" class="btn text-success mx-1 editIcon" data-bs-toggle="modal" data-bs-target="#editTicketModal">Edit</a>
+                        <a href="#" id="' . $tkt->id . '" class="btn text-danger mx-1 deleteIcon">Delete</a>
+                    </td>
+                </tr>';
+            }
+            $output .= '</tbody></table></div>';
+            echo $output;
+        } else {
+            echo '<h1 class="text-center text-secondary my-5">No record present in the database!</h1>';
+        }
+    }
+
+
     public function store(Request $request)
     {
-        $data = [
+        $file = $request->file('picture');
+        $fileName = time() . '.' . $file->getClientOriginalExtension();
+        $file->storeAs('public/images', $fileName);
+    
+        $ticketData = [
             'user_id' => $request->user_id,
-            
+            'picture' => $fileName,
             'title' => $request->title,
             'slug' => Str::slug($request->get('title')),
             'description' => $request->description,
             'assigned_to' => $request->assigned_to,
             'status' => $request->status,
-            'due_on' => $request->due_on];
-        
-        if ($files = $request->file('picture')) {
-            
-            //delete old file
-            \File::delete('public/images/'.$request->picture);
-          
-            //insert new file
-            $files = $request->file('picture');
-            $destinationPath = 'public/images/'; // upload path
-            $imgTicket = date('YmdHis') . "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $imgTicket);
-            $data['picture'] = "$imgTicket";
-        }
-            
-        Ticket::updateOrCreate(['id' => $request->id], $data);
-        // Ticket::updateOrCreate(['id' => $request->id],
-        //         ['user_id' => $request->user_id, 'title' => $request->title, 'slug' => Str::slug($request->get('title')), 'description' => $request->description,
-        //         'assigned_to' => $request->assigned_to, 'status' => $request->status, 'due_on' => $request->due_on]);     
-
-        return response()->json(['success'=>'User data saved successfully.']);
+            'due_on' => $request->due_on
+        ];
+        Ticket::create($ticketData);
+        return response()->json([
+            'status' => 200,
+        ]);
     }
     /**
      * Show the form for editing the specified resource.
@@ -83,23 +97,58 @@ class TicketUserController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
+        $id = $request->id;
         $ticket = Ticket::find($id);
         return response()->json($ticket);
     }
 
+
+    public function update(Request $request)
+    {
+        $fileName = '';
+        $ticket = Ticket::find($request->tkt_id);
+        if($request->hasFile('picture')){
+            $file = $request->file('picture');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public/images', $fileName);
+            if($ticket->picture){
+                Storage::delete('public/images/' . $ticket->picture);
+            }
+        }else{
+            $fileName = $request->tkt_picture;
+        }
+        
+        $ticketData = [
+            'user_id' => $request->user_id,
+            'picture' => $fileName,
+            'title' => $request->title,
+            'slug' => Str::slug($request->get('title')),
+            'description' => $request->description,
+            'assigned_to' => $request->assigned_to,
+            'status' => $request->status,
+            'due_on' => $request->due_on
+        ];
+
+        $ticket->update($ticketData);
+        return response()->json([
+            'status' => 200,
+        ]);
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        Ticket::find($id)->delete();
-     
-        return response()->json(['success'=>'User data deleted successfully.']);
+        $id = $request->id;
+        $ticket = Ticket::find($id);
+        if(Storage::delete('public/images/' . $ticket->picture)){
+            Ticket::destroy($id);
+        }
     }
 
     public function details($slug)
