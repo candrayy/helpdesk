@@ -307,9 +307,4 @@
 });
 </script>
 
-<script src="//cdn.ckeditor.com/4.18.0/full/ckeditor.js"></script>
-<script>
-    //CKEDITOR.replaceClass = 'desc';
-</script>
-
 @endsection
