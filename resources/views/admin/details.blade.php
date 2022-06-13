@@ -6,7 +6,7 @@
 
 <div class="container">
     <h3 class="mt-3">{{ $ticket->title }}</h3>
-    <p class="fs-5">{{ $ticket->user->name }}</p>
+    <p class="fs-5">{{ $ticket->user->email }}</p>
     <img src="/storage/images/{{ $ticket->picture }}" width="65%" class="">
     <hr>
     <p class="fw-semibold fs-5">Description Ticket</p>
@@ -30,6 +30,9 @@
                         <span class="comment-author-name fw-semibold">
                             @if($item->user)
                                 {{ $item->user->name }}
+                                @if($item->user->role_id == 2)
+                                <i class="fa-solid fa-pencil"></i>
+                                @endif
                             @endif
                         </span>
                     </div>

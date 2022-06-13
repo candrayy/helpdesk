@@ -16,7 +16,6 @@
                                         <th>Image</th>
                                         <th>Title</th>
                                         <th>Description</th>
-                                        <th>Assigned To</th>
                                         <th>Status</th>
                                         <th>Due On</th>
                                         <th></th>
@@ -55,16 +54,6 @@
                                   <label for="name" class="col-sm-2 control-label">Description</label>
                                   <div class="col-sm-12">
                                   <textarea type="text" id="description" name="description" class="form-control desc" readonly></textarea>
-                                  </div>
-                              </div>
-                              <div class="form-group">
-                                  <!-- <label for="name" class="col-sm-2 control-label">Assigned To</label> -->
-                                  <div class="col-sm-12" hidden>
-                                    <select name="assigned_to" id="assigned_to" class="form-select form-select-sm" aria-label=".form-select-sm example">
-                                        @foreach($dataUsers as $du)
-                                            <option value="{{$du->id}}">{{$du->name}}</option>
-                                        @endforeach
-                                    </select>
                                   </div>
                               </div>
                               <div class="form-group">
@@ -108,7 +97,6 @@
             {data: 'picture', name: 'picture', orderable: false},
             {data: 'title', name: 'title'},
             {data: 'description', name: 'description'},
-            {data: 'assigned_to', name: 'assigned_to'},
             {data: 'status', name: 'status'},
             {data: 'due_on', name: 'due_on'},
             {data: 'action', name: 'action', orderable: false, searchable: false},

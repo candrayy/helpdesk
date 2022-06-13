@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $ticket = Ticket::count();
+        $ticket = Ticket::where('user_id', Auth::user()->id)->count();
         return view('user.user', compact('ticket'));
     }
 

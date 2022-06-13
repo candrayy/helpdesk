@@ -29,7 +29,10 @@ class UsersAdminController extends Controller
     
                         return $btn;
                     })
-                    ->rawColumns(['action'])
+                    ->addColumn('role_id', function($row){
+                        return $row->role->role_name;
+                    })
+                    ->rawColumns(['action', 'role_id'])
                     ->make(true);
         }
 

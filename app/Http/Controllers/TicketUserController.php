@@ -53,7 +53,7 @@ class TicketUserController extends Controller
                     <td> <a href="/storage/images/' . $tkt->picture . '" data-lightbox="' . $tkt->picture . '"><img src="/storage/images/' . $tkt->picture . '" width="100" class="img-thumbnail"></a></td>
                     <td>' . $tkt->title . '</td>
                     <td>' . $tkt->description . '</td>
-                    <td>' . User::where('id', $tkt->assigned_to)->select('email')->get() . '</td>
+                    <td>' . User::where('id', $tkt->assigned_to)->pluck('email')[0] . '</td>
                     <td>' . $tkt->status . '</td>
                     <td>
                         <a href="details/'. $tkt->slug. '" class="btn text-white mx-1 btn-warning">Detail</a>

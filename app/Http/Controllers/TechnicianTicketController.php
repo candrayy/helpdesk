@@ -38,13 +38,13 @@ class TechnicianTicketController extends Controller
                     ->addColumn('picture', function($row){
                         return '<a href="/storage/images/' . $row->picture . '" data-lightbox="' . $row->picture . '"><img src="/storage/images/' . $row->picture . '" width="100" class="img-thumbnail"></a>';
                     })
-                    ->addColumn('assigned_to', function($row) use ($usr) {
-                        $usr = User::where('id', $row->assigned_to)->get();
+                    ->addColumn('user_id', function($row) use ($usr) {
+                        $usr = User::where('id', $row->user_id)->get();
                         foreach($usr as $u){
                             return $u->email;
                         }
                     })
-                    ->rawColumns(['assigned_to', 'picture', 'action'])
+                    ->rawColumns(['picture', 'action'])
                     ->make(true);
         }
 
@@ -55,7 +55,7 @@ class TechnicianTicketController extends Controller
     {
         Ticket::updateOrCreate(['id' => $request->id],
                 ['user_id' => $request->user_id, 'title' => $request->title, 'slug' => Str::slug($request->get('title')), 'description' => $request->description,
-                'assigned_to' => $request->assigned_to, 'status' => $request->status, 'due_on' => $request->due_on]);       
+                'status' => $request->status, 'due_on' => $request->due_on]);       
    
         return response()->json(['success'=>'User data saved successfully.']);
     }

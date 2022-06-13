@@ -40,7 +40,13 @@ class TicketsAdminController extends Controller
                             return $u->email;
                         }
                     })
-                    ->rawColumns(['assigned_to', 'picture', 'action'])
+                    ->addColumn('user_id', function($row) use ($usr){
+                        $usr = User::where('id', $row->user_id)->get();
+                        foreach($usr as $u){
+                            return $u->email;
+                        }
+                    })
+                    ->rawColumns(['user_id', 'assigned_to', 'picture', 'action'])
                     ->make(true);
         }
 
