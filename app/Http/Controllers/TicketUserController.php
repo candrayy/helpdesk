@@ -56,7 +56,7 @@ class TicketUserController extends Controller
                     <td>' . User::where('id', $tkt->assigned_to)->pluck('email')[0] . '</td>
                     <td>' . $tkt->status . '</td>
                     <td>
-                        <a href="details/'. $tkt->slug. '" class="btn text-white mx-1 btn-warning">Detail</a>
+                        <a href="details/'. $tkt->id. '" class="btn text-white mx-1 btn-warning">Detail</a>
                         <a href="#" id="' . $tkt->id . '" class="btn text-white mx-1 editIcon btn-success" data-bs-toggle="modal" data-bs-target="#editTicketModal">Edit</a>
                         <a href="#" id="' . $tkt->id . '" class="btn text-white mx-1 deleteIcon btn-danger">Delete</a>
                     </td>
@@ -151,9 +151,10 @@ class TicketUserController extends Controller
         }
     }
 
-    public function details($slug)
+    public function details(Request $request)
     {
-        $ticket = Ticket::where('slug', $slug)->first();
+        $ticket = Ticket::where('id', $request->id)->first();
+        // $ticket = Ticket::where('slug', $slug)->first();
         return view('user.detail', compact('ticket'));
     }
 }

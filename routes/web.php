@@ -40,7 +40,7 @@ Route::middleware(['auth', 'admin', 'revalidate'])->group(function () {
     Route::get('/admin', [AdminController::class, 'index'])->name('admin');
     Route::resource('admin/users', UsersAdminController::class);
     Route::resource('admin/ticketss', TicketsAdminController::class);
-    Route::get('admin/detail/{slug}', [TicketsAdminController::class, 'detail'])->name('detail');
+    Route::get('admin/detail/{id}', [TicketsAdminController::class, 'detail'])->name('detail');
     Route::resource('admin/comments', CommentsAdminController::class);
 });
 
@@ -51,7 +51,7 @@ Route::middleware(['auth', 'user', 'revalidate'])->group(function () {
     // User Ticket
     Route::resource('user/tickets', TicketUserController::class);
     Route::post('user/store', [TicketUserController::class, 'store'])->name('storeTkt');
-    Route::get('user/details/{slug}', [TicketUserController::class, 'details']);
+    Route::get('user/details/{id}', [TicketUserController::class, 'details']);
     Route::get('user/fetchall', [TicketUserController::class, 'fetchAll'])->name('fetchAll');
     Route::delete('user/delete', [TicketUserController::class, 'delete'])->name('deleteTkt');
     Route::get('user/edit', [TicketUserController::class, 'edit'])->name('editTkt');
@@ -66,7 +66,7 @@ Route::middleware(['auth', 'technician', 'revalidate'])->group(function () {
     // Technician
     Route::get('/technician', [TechnicianController::class, 'index'])->name('technician');
     Route::resource('technician/ticket', TechnicianTicketController::class);
-    Route::get('technician/detailss/{slug}', [TechnicianTicketController::class, 'detailss']);
+    Route::get('technician/detailss/{id}', [TechnicianTicketController::class, 'detailss']);
     Route::resource('technician/commentss', CommentssTechnicianController::class);
     Route::get('/delete-commentss/{id}', [CommentssTechnicianController::class, 'destroy'])->name('delete-commentss');
 });

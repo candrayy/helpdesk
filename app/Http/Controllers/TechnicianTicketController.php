@@ -29,7 +29,7 @@ class TechnicianTicketController extends Controller
                     ->addColumn('action', function($row){
    
                            $btn = '<div class="text-center">
-                                        <a href="detailss/'.$row->slug.'" class="btn btn-warning text-white btn-xs">Details</a>
+                                        <a href="detailss/'.$row->id.'" class="btn btn-warning text-white btn-xs">Details</a>
                                         <a href="javascript:void(0)" data-toggle="tooltip"  data-id="'.$row->id.'" data-original-title="Edit" class="edit btn btn-success text-white editTicket"><i class="bi bi-pencil-fill">Edit</i></a>
                                    </div>';
     
@@ -83,9 +83,9 @@ class TechnicianTicketController extends Controller
         return response()->json(['success'=>'User data deleted successfully.']);
     }
 
-    public function detailss($slug)
+    public function detailss(request $request)
     {
-        $ticket = Ticket::where('slug', $slug)->first();
+        $ticket = Ticket::where('id', $request->id)->first();
         return view('technician.detail', compact('ticket'));
     }
 }

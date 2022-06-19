@@ -26,7 +26,7 @@ class TicketsAdminController extends Controller
                     ->addColumn('action', function($row){
    
                            $btn = '<div class="text-center">
-                                        <a href="detail/'.$row->slug.'" class="btn btn-warning text-white btn-xs">Details</a>
+                                        <a href="detail/'.$row->id.'" class="btn btn-warning text-white btn-xs">Details</a>
                                    </div>';
     
                         return $btn;
@@ -123,9 +123,9 @@ class TicketsAdminController extends Controller
         //
     }
 
-    public function detail($slug)
+    public function detail(request $request)
     {
-        $ticket = Ticket::where('slug', $slug)->first();
+        $ticket = Ticket::where('id', $request->id)->first();
         return view('admin.details', compact('ticket'));
     }
 }
